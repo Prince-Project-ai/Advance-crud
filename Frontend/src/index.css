@@ -1,0 +1,63 @@
+@import "tailwindcss";
+
+/* Define custom theme colors using CSS variables */
+:root {
+  --custom-bg: #09090b; /* Dark background color */
+  --custom-bg-secondary: #27272a; /* Dark background color */
+  --custom-border: #27272a; /* Border color */
+  --custom-light: #e2e2e2; /* Light text color */
+  --custom-hover: #27272a; /* Hover color */
+  --custom-secondary-color: #a1a1aa; /* Hover color */
+}
+
+/* Extend Tailwind with custom styles */
+@layer base {
+  body {
+    font-family: "Geist", sans-serif;
+    background-color: var(--custom-bg);
+    color: var(--custom-light);
+    accent-color: var(--custom-light);
+  }
+}
+
+@layer components {
+  .header {
+    background-color: var(--custom-bg);
+  }
+  .lable-color {
+    color: var(--custom-light);
+  }
+
+  .border-color {
+    border: 1px solid var(--custom-border);
+  }
+
+  .border-b-color {
+    border-bottom: 1px solid var(--custom-border);
+  }
+  .border-t-color {
+    border-top: 1px solid var(--custom-border);
+  }
+
+  .border-focus-color {
+    border: 1px solid var(--custom-light);
+  }
+
+  .font-secondary-color {
+    color: var(--custom-secondary-color);
+  }
+  .footer {
+    background-color: var(--custom-border);
+  }
+  .btn {
+    background-color: var(--custom-light);
+    border: 1px solid var(--custom-border);
+    color: var(--custom-bg);
+    transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+    width: 100%;
+  }
+  .btn:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }
+}
