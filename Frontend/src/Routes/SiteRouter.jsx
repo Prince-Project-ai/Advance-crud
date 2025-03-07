@@ -7,27 +7,30 @@ import Signup from "../Components/Site/AuthComponent/SignUp";
 import Profile from "../Components/Site/Profile";
 import ForgotPassword from "../Components/Site/AuthComponent/ForgotPassword";
 import NewPassword from "../Components/Site/AuthComponent/NewPassword";
+import MessageProvider from "../Contexts/MessageContext";
 
 const SiteRouter = () => {
     return (
-        <UserProvider>
-            <SiteLayout>
-                <Routes>
-                    {/* PUBLIC ROUTER */}
-                    <Route path="/sign-in" element={<Signin />} />
-                    <Route path="/sign-up" element={<Signup />} />
-                    <Route path="/forgot-password" element={<ForgotPassword />} />
-                    <Route path="/new-password" element={<NewPassword />} />
+        <MessageProvider>
+            <UserProvider>
+                <SiteLayout>
+                    <Routes>
+                        {/* PUBLIC ROUTER */}
+                        <Route path="/sign-in" element={<Signin />} />
+                        <Route path="/sign-up" element={<Signup />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="/new-password" element={<NewPassword />} />
 
-                    {/* AUTHORIZED ROUTER */}
-                    <Route path="/" element={
-                        <PrivateRouter>
-                            <Profile />
-                        </PrivateRouter>
-                    } />
-                </Routes>
-            </SiteLayout>
-        </UserProvider>
+                        {/* AUTHORIZED ROUTER */}
+                        <Route path="/" element={
+                            <PrivateRouter>
+                                <Profile />
+                            </PrivateRouter>
+                        } />
+                    </Routes>
+                </SiteLayout>
+            </UserProvider>
+        </MessageProvider>
     );
 };
 

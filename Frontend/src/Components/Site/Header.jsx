@@ -15,7 +15,7 @@ const Header = () => {
                 href="#"
                 className="text-custom-light hover:text-gray-300 transition-colors duration-200 text-lg font-medium"
               >
-                Home
+                sign-in || sign-up || crud || profile
               </a>
             </li>
             <li>

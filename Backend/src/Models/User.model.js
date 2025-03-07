@@ -25,16 +25,16 @@ const userSchema = new Schema(
         hobby: {
             type: String,
             enum: ["Reading", "Traveling", "Gaming", "Coding"],
-            required: true,
+            default: null,
         },
         gender: {
             type: String,
             enum: ["Male", "Female", "Other"],
-            required: true,
+            default: null,
         },
         city: {
             type: String,
-            required: true,
+            default: null,
         },
         refreshToken: {
             type: String,
@@ -46,7 +46,7 @@ const userSchema = new Schema(
     },
 );
 
-userSchema.pre("save", async function () {
+userSchema.pre("save", async function (next) {
     try {
         if (!this.isModified("password")) return next();
         this.password = await bcrypt.hash(this.password, 8);
@@ -87,4 +87,4 @@ userSchema.methods.generateRefreshToken = function () {
 
 
 
-export const User = new mongoose.Model("user", userSchema);
+export const User = new mongoose.model("user", userSchema);
