@@ -6,9 +6,9 @@ import { useFormSignup } from "./Hooks/useFormSIgnup";
 const Signup = () => {
 
   const { formData,
-    setFormData,
     showPassword,
     showConfirmPassword,
+    isLoading,
     setShowPassword,
     setShowConfirmPassword,
     errorMessage,
@@ -121,7 +121,7 @@ const Signup = () => {
             type="submit"
             className="btn py-2 rounded-lg"
           >
-            Sign Up
+            {isLoading ? 'Signing up...' : 'Sign up'}
           </button>
         </form>
 

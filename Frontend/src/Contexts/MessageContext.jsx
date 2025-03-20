@@ -16,12 +16,17 @@ const MessageProvider = ({ children }) => {
       promise,
       {
         loading: 'Loading',
-        success: (data) => ` ${(typeof data?.message !== "string") ? JSON.stringify(data?.message) : data?.message}`,
-        error: (err) => `${(typeof err?.response?.data?.message || err?.message !== "string") ? JSON.stringify(err?.response?.data?.message || err?.message) : err?.response?.data?.message || err?.message}`,
+        success: (data) =>
+          typeof data?.message === "string" ? data.message : JSON.stringify(data?.message),
+
+        error: (err) => {
+          const errorMessage = err?.response?.data?.message || err?.message;
+          return typeof errorMessage === "string" ? errorMessage : JSON.stringify(errorMessage);
+        }
       },
       {
         style: {
-          minWidth: '270px',
+          minWidth: '260px',
         },
         success: {
           duration: 3000,

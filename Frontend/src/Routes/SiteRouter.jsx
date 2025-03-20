@@ -8,6 +8,7 @@ import Profile from "../Components/Site/Profile";
 import ForgotPassword from "../Components/Site/AuthComponent/ForgotPassword";
 import NewPassword from "../Components/Site/AuthComponent/NewPassword";
 import MessageProvider from "../Contexts/MessageContext";
+import FullScreenLoader from "../Components/Loader/FullScreenLoader";
 
 const SiteRouter = () => {
     return (
@@ -41,9 +42,9 @@ export default SiteRouter;
 // creating private router for preventing the access if not authorized
 export const PrivateRouter = ({ children }) => {
     const { isAuthenticated, isLoading } = useUserData();
-    if (isLoading) return (<p>Loading...</p>)
 
-    console.log(isAuthenticated);
+    if (isLoading) return <FullScreenLoader />
+
     if (!isAuthenticated) return <Navigate to="/sign-in" replace />
     return children;
 } 

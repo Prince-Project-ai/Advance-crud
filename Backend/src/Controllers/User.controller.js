@@ -74,16 +74,18 @@ class userController {
 
         const { newAccessToken, newRefreshToken } = await this.generateAccessTokenAndRefreshToken(isAuthenticated._id, next);
 
-        const loggedUser = await User.findById(isAuthenticated._id).select("-password -refreshToken -hobby -gender -city");
+        const loggedUser = await User.findById(isAuthenticated._id).select("-password -refreshToken");
+
+
         res
             .status(200)
-            .cookie("accessToken", newAccessToken, this.cookieOptions)
-            .cookie("refreshToken", newRefreshToken, this.cookieOptions)
-            .json(new ApiResponse(200, "User registered successfully.", { loggedUser, newAccessToken, newRefreshToken }));
+            .cookie("accessToken", newAccessToken, this.cookieOptions())
+            .cookie("refreshToken", newRefreshToken, this.cookieOptions())
+            .json(new ApiResponse(200, "User sign in successfully.", { loggedUser, newAccessToken, newRefreshToken }));
     });
 
     static currentUser = asyncHandler(async (req, res, next) => {
-        const userData = await User.findById(req?.user?._id);
+        const userData = await User.findById(req?.user?._id).select("-refreshToken -password");
         if (!userData) return next(new ApiError(404, "User not found."));
         res.status(200).json(new ApiResponse(200, "User found.", userData));
     });
@@ -97,6 +99,21 @@ class userController {
             .clearCookie("refreshToken")
             .json(new ApiResponse(200, "User logged out successfully."));
     });
+    static updateProfile = asyncHandler(async (req, res, next) => {
+    });
 }
 
 export default userController;
+
+
+
+
+
+
+
+
+
+
+
+
+

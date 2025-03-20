@@ -19,5 +19,7 @@ export const validateForm = (formData) => {
     errors.password = "Password must be at least 6 characters";
   }
 
+
+
   return errors;
 };

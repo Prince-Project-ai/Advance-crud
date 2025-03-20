@@ -2,8 +2,12 @@
 import React from "react";
 import Header from "../Components/Site/Header";
 import Footer from "../Components/Site/Footer";
+import { useUserData } from "../Contexts/UserContext";
+import FullScreenLoader from "../Components/Loader/FullScreenLoader";
 
 const SiteLayout = ({ children }) => {
+  const { isAuthenticated } = useUserData();
+
   return (
     <div className="min-h-screen flex flex-col bg-custom-bg"> {/* Set body background to custom-bg */}
       <Header />

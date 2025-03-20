@@ -1,4 +1,5 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useCallback } from "react";
+import { currentAuthData } from "../../Apis/HandleUserApi";
 
 export const UserContext = createContext();
 
@@ -10,20 +11,41 @@ export const useUserData = () => {
 
 const UserProvider = ({ children }) => {
 
-    const [user, setUser] = useState({ name: "Pricne" });
+    const [user, setUser] = useState(null);
     // const [user, setUser] = useState(null);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [isLoading, seIsLoading] = useState(true);
 
+
+
+    const fetchCurrentAuthData = useCallback(async () => {
+        try {
+            const res = await currentAuthData();
+            if (res?.success) {
+                setUser(res.data);
+                setIsAuthenticated(res?.success);
+            }
+        } catch (error) {
+            console.error(error?.response?.data?.message || error?.message);
+        } finally {
+            seIsLoading(false);
+        }
+    }, []);
+
     useEffect(() => {
-        setIsAuthenticated(!!user);
-        seIsLoading(false);
-    }, [user]);
+        fetchCurrentAuthData();
+        return () => {
+            fetchCurrentAuthData();
+        };
+    }, []);
+
+
 
     const contextValue = {
         user,
         setUser,
         isAuthenticated,
+        setIsAuthenticated,
         isLoading,
     }
 

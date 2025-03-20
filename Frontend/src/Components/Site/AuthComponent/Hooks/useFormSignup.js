@@ -1,21 +1,22 @@
 import { useState } from "react";
 import { useMessage } from "../../../../Contexts/MessageContext";
-import { validateForm } from "../../../../../Utils/Validation.js";
 import { signupUser } from "../../../../../Apis/HandleUserApi.js";
+import { useNavigate } from "react-router-dom";
+import { validateForm } from "../../../../Utils/Validation.js";
 
 export const useFormSignup = () => {
   const { showToast } = useMessage();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
     crmPassword: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState({});
-
-
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -39,8 +40,9 @@ export const useFormSignup = () => {
     const errors = validateForm(formData);
 
     if (Object.keys(errors).length === 0 && !newErrors.crmPassword) {
-      console.log(formData);
       setErrorMessage({});
+
+      setIsLoading(true);
 
       // ✅ Store the promise and handle the resolved data
       const signupPromise = signupUser(formData);
@@ -49,11 +51,18 @@ export const useFormSignup = () => {
 
       signupPromise
         .then((res) => {
-          console.log("User signed up successfully:", res);
-          // Perform any additional actions like redirecting user
+          setFormData({
+            userName: "",
+            email: "",
+            password: "",
+            crmPassword: "",
+          });
+          navigate("/sign-in");
         })
         .catch((error) => {
           console.error("Signup failed:", error);
+        }).finally(() => {
+          setIsLoading(false);
         });
     } else {
       setErrorMessage({ ...errors, ...newErrors });
@@ -65,6 +74,7 @@ export const useFormSignup = () => {
     formData,
     setFormData,
     showPassword,
+    isLoading,
     showConfirmPassword,
     setShowPassword,
     setShowConfirmPassword,
