@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
-import { currentAuthData } from "../../Apis/HandleUserApi";
+import { currentAuthData } from "../Apis/HandleUserApi";
 
 export const UserContext = createContext();
 

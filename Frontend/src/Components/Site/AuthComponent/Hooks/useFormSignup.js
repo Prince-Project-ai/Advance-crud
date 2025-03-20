@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMessage } from "../../../../Contexts/MessageContext";
-import { signupUser } from "../../../../../Apis/HandleUserApi.js";
+import { signupUser } from "../../../../Apis/HandleUserApi.js";
 import { useNavigate } from "react-router-dom";
 import { validateForm } from "../../../../Utils/Validation.js";
 
